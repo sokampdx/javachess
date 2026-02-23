@@ -6,11 +6,11 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder
 public class King extends Piece {
-    private boolean isInCheck;
+    private boolean canCastle;
 
     public King(PieceColor color, Position position) {
         super(color, position);
-        this.isInCheck = false;
+        this.canCastle = true;
     }
 
     @Override
@@ -25,6 +25,7 @@ public class King extends Piece {
 
         // Castling logic can be added here
 
+        this.canCastle = false; // After the first move, castling is no longer possible
         return false;
     }
     
