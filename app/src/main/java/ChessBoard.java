@@ -6,6 +6,13 @@ public class ChessBoard {
         setupBoard();
     }
 
+    public void setPiece(int row, int col, Piece piece) {
+        board[row][col] = piece;
+        if (piece != null) {
+            piece.setPosition(new Position(row, col));
+        }
+    }
+
     private void setupBoard() {
         // Setup pawns
         for (int i = 0; i < 8; i++) {
