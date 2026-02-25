@@ -24,7 +24,23 @@ public class King extends Piece {
         }
 
         // Castling logic can be added here
-
+        if (colDiff == 2 && rowDiff == 0 && canCastle) {
+             // Check if the path is clear and the rook is in the correct position
+            int rookCol = (newPosition.getCol() == 6) ? 7 : 0;
+            Piece rook = board.getPiece(position.getRow(), rookCol);
+            if (rook instanceof Rook && rook.getColor() == this.color && ((Rook) rook).isCanCastle()) {
+                // Check if the squares between the king and rook are empty
+                int step = (newPosition.getCol() - position.getCol()) / 2;
+                for (int col = position.getCol() + step; col != rookCol; col += step) {
+                    if (!board.isEmpty(position.getRow(), col)) {
+                        return false; // Path is blocked
+                    } else { 
+                        // Check if the square in betweenis under attack
+                    }
+                }
+                // Check if the squares between the king and rook are not under attack
+            }
+        }
         this.canCastle = false; // After the first move, castling is no longer possible
         return false;
     }
