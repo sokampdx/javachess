@@ -12,4 +12,6 @@ public abstract class Piece {
     protected Position position;
 
     public abstract boolean isValidMove(Position newPosition, ChessBoard board);
+
+    public abstract Piece clone();
 }

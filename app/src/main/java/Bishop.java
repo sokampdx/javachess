@@ -31,4 +31,11 @@ public class Bishop extends Piece {
         return false;
     }
     
+    @Override
+    public Piece clone() {
+        return Bishop.builder()
+                .color(this.color)
+                .position(new Position(this.position.getRow(), this.position.getCol()))
+                .build();
+    }
 }

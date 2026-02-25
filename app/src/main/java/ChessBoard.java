@@ -13,6 +13,10 @@ public class ChessBoard {
         }
     }
 
+    public void setPiece(Position position, Piece piece) {
+        setPiece(position.getRow(), position.getCol(), piece);
+    }
+
     private void setupBoard() {
         // Setup pawns
         for (int i = 0; i < 8; i++) {
@@ -66,6 +70,10 @@ public class ChessBoard {
 
     public Piece getPiece(Position position) {
         return getPiece(position.getRow(), position.getCol());
+    }
+
+    public void removePiece(Position position) {
+        setPiece(position.getRow(), position.getCol(), null);
     }
 
     public Position findKingPosition(PieceColor color) {

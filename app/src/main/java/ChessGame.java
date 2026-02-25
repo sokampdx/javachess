@@ -8,26 +8,19 @@ public class ChessGame {
     }
 
     public boolean movePiece(Position from, Position to) {
-        Piece piece = board.getPiece(from.getRow(), from.getCol());
+        Piece piece = board.getPiece(from).clone();
         if (piece == null || piece.getColor() != currentPlayer) {
             return false; // No piece at the source or not the player's turn
         }
 
         if (piece.isValidMove(to, board)) {
-            if ((piece instanceof Pawn) && ((Pawn) piece).getExecuteEnPassant()) {
-                // Handle en passant capture
+            if ((piece instanceof Pawn) && ((Pawn) piece).executeEnPassant(board, to)) {
                 Position capturedPawnPosition = ((Pawn) piece).enPassantPosition(to, board, ((Pawn) piece).getForwardDirection());
-                board.getPiece(capturedPawnPosition.getRow(), capturedPawnPosition.getCol()).setPosition(null);
-                board.getPiece(capturedPawnPosition.getRow(), capturedPawnPosition.getCol()).setColor(null);
-                ((Pawn) piece).setExecuteEnPassant(false); // Reset en passant execution flag
+                board.removePiece(capturedPawnPosition);
+                ((Pawn) piece).setCanEnPassant(false);
             }
-            // Regular move, clear the source square
-            board.getPiece(from.getRow(), from.getCol()).setPosition(null);
-            board.getPiece(from.getRow(), from.getCol()).setColor(null);
-            
-            // Move the piece
-            board.getPiece(to.getRow(), to.getCol()).setPosition(to);
-            board.getPiece(to.getRow(), to.getCol()).setColor(currentPlayer);
+            board.removePiece(from);
+            board.setPiece(to, piece);
 
             // Switch player
             currentPlayer = (currentPlayer == PieceColor.WHITE) ? PieceColor.BLACK : PieceColor.WHITE;

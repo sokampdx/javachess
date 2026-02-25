@@ -7,16 +7,10 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class Pawn extends Piece {
     private boolean canEnPassant;
-    private boolean executeEnPassant;
 
     public Pawn(PieceColor color, Position position) {
         super(color, position);
         this.canEnPassant = false;
-        this.executeEnPassant = false;
-    }
-
-    public boolean getExecuteEnPassant() {
-        return executeEnPassant;
     }
 
     @Override
@@ -42,6 +36,15 @@ public class Pawn extends Piece {
         return false;
     }
 
+    @Override
+    public Piece clone() {
+        return Pawn.builder()
+                .color(this.color)
+                .position(new Position(this.position.getRow(), this.position.getCol()))
+                .canEnPassant(this.canEnPassant)
+                .build();
+    }
+
     private boolean isNormalCapture(Position newPosition, ChessBoard board) {
         return board.isNotEmpty(newPosition.getRow(), newPosition.getCol());
     }
@@ -56,7 +59,7 @@ public class Pawn extends Piece {
         board.getPiece(capturedPawnPosition) instanceof Pawn && ((Pawn) board.getPiece(capturedPawnPosition)).canEnPassant;
     }
 
-    private boolean isDoubleMove(int forwardDirection, int rowDiff) {
+    public boolean isDoubleMove(int forwardDirection, int rowDiff) {
         return ((position.getRow() == 1 && color == PieceColor.WHITE) || (position.getRow() == 6 && color == PieceColor.BLACK)) && (rowDiff == 2 * forwardDirection);
     }
 
@@ -77,12 +80,7 @@ public class Pawn extends Piece {
         return forwardDirection;
     }
 
-    public boolean setToExecuteEnPassant(ChessBoard board, Position newPosition) {
-        int forwardDirection = getForwardDirection();
-        if (isEnPassantCapture(newPosition, board, forwardDirection)) {
-            this.executeEnPassant = true; // Mark that en passant will be executed
-        }
-
-        return this.executeEnPassant;
+    public boolean executeEnPassant(ChessBoard board, Position newPosition) {
+        return isEnPassantCapture(newPosition, board, getForwardDirection());
     }
 }

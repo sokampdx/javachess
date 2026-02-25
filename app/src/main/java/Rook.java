@@ -45,4 +45,12 @@ public class Rook extends Piece {
         return board.getPiece(newPosition.getRow(), newPosition.getCol()).getColor() != this.color; 
     }
 
+    @Override
+    public Piece clone() {
+        return Rook.builder()
+                .color(this.color)
+                .position(new Position(this.position.getRow(), this.position.getCol()))
+                .canCastle(this.canCastle)
+                .build();
+    }
 }
