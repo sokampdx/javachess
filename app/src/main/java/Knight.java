@@ -6,10 +6,6 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder
 public class Knight extends Piece {
-    public Knight(PieceColor color, Position position) {
-        super(color, position);
-    }
-
     @Override
     public boolean isValidMove(Position newPosition, ChessBoard board) {
         int rowDiff = Math.abs(newPosition.getRow() - position.getRow());
