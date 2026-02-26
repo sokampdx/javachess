@@ -14,6 +14,13 @@ public class ChessBoard {
         }
     }
 
+    public void setPiece(Piece piece) {
+        if (piece == null) {
+            throw new IllegalArgumentException("The piece can not be nothing");
+        }
+        board_pieces[piece.position.getRow()][piece.position.getCol()] = piece;
+    }
+
     public void setPiece(Position position, Piece piece) {
         setPiece(position.getRow(), position.getCol(), piece);
     }
@@ -45,19 +52,19 @@ public class ChessBoard {
     }
 
     public boolean isEmpty(int row, int col) {
-        return board_pieces[row][col] == null;
+        return getPiece(row, col) == null;
     }
 
     public boolean isEmpty(Position position) {
-        return isEmpty(position.getRow(), position.getCol());
+        return getPiece(position) == null;
     }
 
     public boolean isNotEmpty(int row, int col) {
-        return board_pieces[row][col] != null;
+        return !isEmpty(row, col);
     }
 
     public boolean isSamePlayerPiece(Position position, PieceColor color) {
-        return board_pieces[position.getRow()][position.getCol()] != null && board_pieces[position.getRow()][position.getCol()].getColor() == color;
+        return getPiece(position) != null && getPiece(position).getColor() == color;
     }
 
     public boolean isOpponentPiece(Position position, PieceColor color) {

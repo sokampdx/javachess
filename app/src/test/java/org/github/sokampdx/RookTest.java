@@ -12,7 +12,7 @@ public class RookTest {
     public void setUp() {
         board = new ChessBoard();
         whiteRook = new Rook(PieceColor.WHITE, new Position(0, 0), true);
-        board.setPiece(whiteRook.getPosition(), whiteRook);
+        board.setPiece(whiteRook);
     }
 
     @Test
@@ -30,8 +30,7 @@ public class RookTest {
     @Test
     public void testInvalidBlockedMove() {
         Position position = new Position(0, 5);
-        Pawn blockingPawn = new Pawn(PieceColor.WHITE, new Position(0, 3), false);
-        board.setPiece(blockingPawn.getPosition(), blockingPawn);
+        board.setPiece(new Pawn(PieceColor.WHITE, new Position(0, 3), false));
         assertFalse(whiteRook.isValidMove(position, board));
     }
 

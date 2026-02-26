@@ -49,7 +49,7 @@ public class ChessBoardTest {
     public void testNoExceptionWhenKingIsFound() {
         Position position = new Position(5, 5);
         Piece whiteKing = new King(PieceColor.WHITE, position, true);
-        board.setPiece(whiteKing.getPosition(), whiteKing);
+        board.setPiece(whiteKing);
         Position kingPosition = board.findKingPosition(PieceColor.WHITE);
         assertEquals(kingPosition.getRow(), position.getRow());
         assertEquals(kingPosition.getCol(), position.getCol());
@@ -58,9 +58,9 @@ public class ChessBoardTest {
     @Test
     public void testIsInCheck() {
         Piece whiteKing = new King(PieceColor.WHITE, new Position(5, 5));
-        board.setPiece(whiteKing.getPosition(), whiteKing);
+        board.setPiece(whiteKing);
         Piece blackRook = new Rook(PieceColor.BLACK, new Position(5, 0));
-        board.setPiece(blackRook.getPosition(), blackRook);
+        board.setPiece(blackRook);
 
         assertTrue(board.isInCheck(PieceColor.WHITE));
     }
@@ -68,9 +68,9 @@ public class ChessBoardTest {
     @Test
     public void testIsNotInCheck() {
         Piece whiteKing = new King(PieceColor.WHITE, new Position(5, 5));
-        board.setPiece(whiteKing.getPosition(), whiteKing);
+        board.setPiece(whiteKing);
         Piece blackRook = new Rook(PieceColor.BLACK, new Position(3, 3));
-        board.setPiece(blackRook.getPosition(), blackRook);
+        board.setPiece(blackRook);
 
         assertFalse(board.isInCheck(PieceColor.WHITE));
     }
@@ -80,9 +80,9 @@ public class ChessBoardTest {
         Position from = new Position(5, 5);
         Position to = new Position(4, 5);
         Piece whiteKing = new King(PieceColor.WHITE, from);
-        board.setPiece(whiteKing.getPosition(), whiteKing);
+        board.setPiece(whiteKing);
         Piece blackRook = new Rook(PieceColor.BLACK, new Position(4, 0));
-        board.setPiece(blackRook.getPosition(), blackRook);
+        board.setPiece(blackRook);
 
         assertTrue(board.isCheckAfterMove(from, to, PieceColor.WHITE));
     }
@@ -92,9 +92,9 @@ public class ChessBoardTest {
         Position from = new Position(5, 5);
         Position to = new Position(4, 5);
         Piece whiteKing = new King(PieceColor.WHITE, from);
-        board.setPiece(whiteKing.getPosition(), whiteKing);
+        board.setPiece(whiteKing);
         Piece blackRook = new Rook(PieceColor.BLACK, new Position(5, 0));
-        board.setPiece(blackRook.getPosition(), blackRook);
+        board.setPiece(blackRook);
 
         assertFalse(board.isCheckAfterMove(from, to, PieceColor.WHITE));
     }
