@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN"> <!-- Status log level for Log4j itself -->
+    <Appenders>
+        <!-- ConsoleAppender: Logs to the console -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+        </Console>
+    </Appenders>
+    <Loggers>
+        <!-- Root logger: Sets default log level for all loggers -->
+        <Root level="DEBUG">
+            <AppenderRef ref="Console" />
+        </Root>
+
+        <!-- Optional: Set DEBUG for specific packages (e.g., your app’s package) -->
+        <Logger name="com.yourcompany.yourapp" level="DEBUG" additivity="false">
+            <AppenderRef ref="Console" />
+        </Logger>
+    </Loggers>
+</Configuration>

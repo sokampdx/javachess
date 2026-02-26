@@ -1,16 +1,24 @@
-import lombok.Getter;
-import lombok.Setter;
+package org.github.sokampdx;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
-@SuperBuilder
 public class Pawn extends Piece {
     private boolean canEnPassant;
 
     public Pawn(PieceColor color, Position position) {
         super(color, position);
         this.canEnPassant = false;
+    }
+
+    public Pawn(PieceColor color, Position position, boolean canEnPassant) {
+        super(color, position);
+        this.canEnPassant = canEnPassant;
+    }
+
+    public void setCanEnPassant(boolean canEnPassant) {
+        this.canEnPassant = canEnPassant;
     }
 
     @Override
@@ -38,11 +46,7 @@ public class Pawn extends Piece {
 
     @Override
     public Piece clone() {
-        return Pawn.builder()
-                .color(this.color)
-                .position(new Position(this.position.getRow(), this.position.getCol()))
-                .canEnPassant(this.canEnPassant)
-                .build();
+        return new Pawn(color, new Position(position), canEnPassant);
     }
 
     private boolean isNormalCapture(Position newPosition, ChessBoard board) {

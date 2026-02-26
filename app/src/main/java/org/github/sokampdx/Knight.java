@@ -1,11 +1,15 @@
-import lombok.Getter;
-import lombok.Setter;
+package org.github.sokampdx;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
-@SuperBuilder
 public class Knight extends Piece {
+
+    public Knight(PieceColor color, Position position) {
+        super(color, position);
+    }
+
     @Override
     public boolean isValidMove(Position newPosition, ChessBoard board) {
         int rowDiff = Math.abs(newPosition.getRow() - position.getRow());
@@ -21,9 +25,6 @@ public class Knight extends Piece {
 
     @Override
     public Piece clone() {
-        return Knight.builder()
-                .color(this.color)
-                .position(new Position(this.position.getRow(), this.position.getCol()))
-                .build();
+        return new Knight(color, new Position(position));
     }
 }

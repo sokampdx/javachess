@@ -1,3 +1,4 @@
+package org.github.sokampdx;
 public class ChessGame {
     private ChessBoard board;
     private PieceColor currentPlayer;
@@ -5,6 +6,7 @@ public class ChessGame {
     public ChessGame() {
         board = new ChessBoard();
         currentPlayer = PieceColor.WHITE;
+        board.setupNewBoard();
     }
 
     public boolean movePiece(Position from, Position to) {

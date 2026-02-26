@@ -1,15 +1,23 @@
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.SuperBuilder;
+package org.github.sokampdx;
+import lombok.*;
 
 @Getter
 @Setter
-@SuperBuilder
 public class Rook extends Piece {
     private boolean canCastle;
+
     public Rook(PieceColor color, Position position) {
         super(color, position);
         this.canCastle = true;
+    }
+
+    public Rook(PieceColor color, Position position, boolean canCastle) {
+        super(color, position);
+        this.canCastle = canCastle;
+    }
+
+    public boolean isCanCastle() {
+        return this.canCastle;
     }
 
     @Override
@@ -37,20 +45,16 @@ public class Rook extends Piece {
         }
 
         // Check if the destination square is empty or occupied by an opponent's piece
-        if (board.isEmpty(newPosition.getRow(), newPosition.getCol())) {
+        if (board.isEmpty(newPosition)) {
             return true; // Valid move to an empty square
         }
         
         // Capture move
-        return board.getPiece(newPosition.getRow(), newPosition.getCol()).getColor() != this.color; 
+        return board.getPiece(newPosition).getColor() != this.color; 
     }
 
     @Override
     public Piece clone() {
-        return Rook.builder()
-                .color(this.color)
-                .position(new Position(this.position.getRow(), this.position.getCol()))
-                .canCastle(this.canCastle)
-                .build();
+        return new Rook(color, new Position(position), canCastle);
     }
 }

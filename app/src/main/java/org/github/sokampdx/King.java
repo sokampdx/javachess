@@ -1,16 +1,20 @@
-import lombok.Getter;
-import lombok.Setter;
+package org.github.sokampdx;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
-@SuperBuilder
 public class King extends Piece {
     private boolean canCastle;
 
     public King(PieceColor color, Position position) {
         super(color, position);
         this.canCastle = true;
+    }
+
+    public King(PieceColor color, Position position, boolean canCastle) {
+        super(color, position);
+        this.canCastle = canCastle;
     }
 
     @Override
@@ -35,7 +39,7 @@ public class King extends Piece {
                     if (!board.isEmpty(position.getRow(), col)) {
                         return false; // Path is blocked
                     } else { 
-                        // Check if the square in betweenis under attack
+                        // Check if the square in between is under attack
                     }
                 }
                 // Check if the squares between the king and rook are not under attack
@@ -47,10 +51,6 @@ public class King extends Piece {
     
     @Override
     public Piece clone() {
-        return King.builder()
-                .color(this.color)
-                .position(new Position(this.position.getRow(), this.position.getCol()))
-                .canCastle(this.canCastle)
-                .build();
+        return new King(color, new Position(position), canCastle);
     }
 }

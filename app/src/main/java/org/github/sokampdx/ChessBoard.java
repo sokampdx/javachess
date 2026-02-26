@@ -1,15 +1,16 @@
+package org.github.sokampdx;
+
 public class ChessBoard {
-    private Piece[][] board_pieces;
+    private final Piece[][] board_pieces;
 
     public ChessBoard() {
         board_pieces = new Piece[8][8];
-        setupBoard();
     }
 
     public void setPiece(int row, int col, Piece piece) {
         board_pieces[row][col] = piece;
         if (piece != null) {
-            piece.setPosition(new Position(row, col));
+            piece.setPosition((new Position(row, col)));
         }
     }
 
@@ -17,31 +18,30 @@ public class ChessBoard {
         setPiece(position.getRow(), position.getCol(), piece);
     }
 
-    private void setupBoard() {
+    public void setupNewBoard() {
         // Setup pawns
         for (int i = 0; i < 8; i++) {
-            board_pieces[1][i] = Pawn.builder().color(PieceColor.WHITE).position(new Position(1, i)).build();
-            board_pieces[6][i] = Pawn.builder().color(PieceColor.BLACK).position(new Position(6, i)).build();
+            board_pieces[1][i] = new Pawn(PieceColor.WHITE, new Position(1, i));
+            board_pieces[6][i] = new Pawn(PieceColor.BLACK, new Position(6, i));
         }
 
         // Setup other pieces
-        board_pieces[0][0] = Rook.builder().color(PieceColor.WHITE).position(new Position(0, 0)).build();
-        board_pieces[0][7] = Rook.builder().color(PieceColor.WHITE).position(new Position(0, 7)).build();
-        board_pieces[7][0] = Rook.builder().color(PieceColor.BLACK).position(new Position(7, 0)).build();
-        board_pieces[7][7] = Rook.builder().color(PieceColor.BLACK).position(new Position(7, 7)).build();
-        board_pieces[0][1] = Knight.builder().color(PieceColor.WHITE).position(new Position(0, 1)).build();
-        board_pieces[0][6] = Knight.builder().color(PieceColor.WHITE).position(new Position(0, 6)).build();
-        board_pieces[7][1] = Knight.builder().color(PieceColor.BLACK).position(new Position(7, 1)).build();
-        board_pieces[7][6] = Knight.builder().color(PieceColor.BLACK).position(new Position(7, 6)).build();
-        board_pieces[0][2] = Bishop.builder().color(PieceColor.WHITE).position(new Position(0, 2)).build();
-        board_pieces[0][5] = Bishop.builder().color(PieceColor.WHITE).position(new Position(0, 5)).build();
-        board_pieces[7][2] = Bishop.builder().color(PieceColor.BLACK).position(new Position(7, 2)).build();
-        board_pieces[7][5] = Bishop.builder().color(PieceColor.BLACK).position(new Position(7, 5)).build();
-        board_pieces[0][3] = Queen.builder().color(PieceColor.WHITE).position(new Position(0, 3)).build();
-        board_pieces[7][3] = Queen.builder().color(PieceColor.BLACK).position(new Position(7, 3)).build();
-        board_pieces[0][4] = King.builder().color(PieceColor.WHITE).position(new Position(0, 4)).build();
-        board_pieces[7][4] = King.builder().color(PieceColor.BLACK).position(new Position(7, 4)).build();
-        
+        board_pieces[0][0] = new Rook(PieceColor.WHITE, new Position(0, 0));
+        board_pieces[0][7] = new Rook(PieceColor.WHITE, new Position(0, 7));
+        board_pieces[7][0] = new Rook(PieceColor.BLACK, new Position(7, 0));
+        board_pieces[7][7] = new Rook(PieceColor.BLACK, new Position(7, 7));
+        board_pieces[0][1] = new Knight(PieceColor.WHITE, new Position(0, 1));
+        board_pieces[0][6] = new Knight(PieceColor.WHITE, new Position(0, 6));
+        board_pieces[7][1] = new Knight(PieceColor.BLACK, new Position(7, 1));
+        board_pieces[7][6] = new Knight(PieceColor.BLACK, new Position(7, 6));
+        board_pieces[0][2] = new Bishop(PieceColor.WHITE, new Position(0, 2));
+        board_pieces[0][5] = new Bishop(PieceColor.WHITE, new Position(0, 5));
+        board_pieces[7][2] = new Bishop(PieceColor.BLACK, new Position(7, 2));
+        board_pieces[7][5] = new Bishop(PieceColor.BLACK, new Position(7, 5));
+        board_pieces[0][3] = new Queen(PieceColor.WHITE, new Position(0, 3));
+        board_pieces[7][3] = new Queen(PieceColor.BLACK, new Position(7, 3));
+        board_pieces[0][4] = new King(PieceColor.WHITE, new Position(0, 4));
+        board_pieces[7][4] = new King(PieceColor.BLACK, new Position(7, 4));
     }
 
     public boolean isEmpty(int row, int col) {

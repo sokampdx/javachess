@@ -1,11 +1,13 @@
-import lombok.Getter;
-import lombok.Setter;
+package org.github.sokampdx;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
-@SuperBuilder
 public class Bishop extends Piece {
+    public Bishop(PieceColor color, Position position) {
+        super(color, position);
+    }
 
     @Override
     public boolean isValidMove(Position newPosition, ChessBoard board) {
@@ -33,9 +35,6 @@ public class Bishop extends Piece {
     
     @Override
     public Piece clone() {
-        return Bishop.builder()
-                .color(this.color)
-                .position(new Position(this.position.getRow(), this.position.getCol()))
-                .build();
+        return new Bishop(color, new Position(position));
     }
 }
