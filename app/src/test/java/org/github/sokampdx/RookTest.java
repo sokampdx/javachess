@@ -30,6 +30,8 @@ public class RookTest {
     @Test
     public void testInvalidBlockedMove() {
         Position position = new Position(0, 5);
+        assertTrue(whiteRook.isValidMove(position, board));
+
         board.setPiece(new Pawn(PieceColor.WHITE, new Position(0, 3), false));
         assertFalse(whiteRook.isValidMove(position, board));
     }
