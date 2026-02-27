@@ -16,8 +16,11 @@ public class RookTest {
     }
 
     @Test
-    public void testValidHorizontalMove() {
+    public void testValidOrthogonalMove() {
         Position position = new Position(0, 5);
+        assertTrue(whiteRook.isValidMove(position, board));
+
+        position = new Position(4, 0);
         assertTrue(whiteRook.isValidMove(position, board));
     }
 
@@ -34,11 +37,5 @@ public class RookTest {
 
         board.setPiece(new Pawn(PieceColor.WHITE, new Position(0, 3), false));
         assertFalse(whiteRook.isValidMove(position, board));
-    }
-
-    @Test
-    public void testValidVerticalMove() {
-        Position position = new Position(5, 0);
-        assertTrue(whiteRook.isValidMove(position, board));
     }
 }

@@ -22,7 +22,7 @@ public class BishopTest {
     }
 
     @Test
-    public void testInvalidMove() {
+    public void testInvalidOrthogonalMove() {
         Position position = new Position(5, 0);
         assertFalse(blackBishop.isValidMove(position, board));
     }
