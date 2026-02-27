@@ -112,15 +112,18 @@ public class ChessBoard {
 
     public boolean isCheckAfterMove(Position from, Position to, PieceColor color) {
         // Simulate the move and check if the king is still in check
-        Piece originalPiece = getPiece(to.getRow(), to.getCol());
-        setPiece(to.getRow(), to.getCol(), getPiece(from.getRow(), from.getCol()));
+        Piece originalToPiece = getPiece(to.getRow(), to.getCol());
+        Piece originalFromPiece = getPiece(from.getRow(), from.getCol());
+        Piece newFromPiece = originalFromPiece.clone();
+        newFromPiece.setPosition(new Position(to));
+        setPiece(to.getRow(), to.getCol(), newFromPiece);
         setPiece(from.getRow(), from.getCol(), null);
 
         boolean inCheck = isInCheck(color);
 
         // Revert the move
-        setPiece(from.getRow(), from.getCol(), getPiece(to.getRow(), to.getCol()));
-        setPiece(to.getRow(), to.getCol(), originalPiece);
+        setPiece(originalFromPiece);
+        setPiece(to.getRow(), to.getCol(), originalToPiece);
 
         return inCheck;
     }

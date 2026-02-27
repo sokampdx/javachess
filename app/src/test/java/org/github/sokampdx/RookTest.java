@@ -17,17 +17,13 @@ public class RookTest {
 
     @Test
     public void testValidOrthogonalMove() {
-        Position position = new Position(0, 5);
-        assertTrue(whiteRook.isValidMove(position, board));
-
-        position = new Position(4, 0);
-        assertTrue(whiteRook.isValidMove(position, board));
+        assertTrue(whiteRook.isValidMove(new Position(0, 5), board));
+        assertTrue(whiteRook.isValidMove(new Position(4, 0), board));
     }
 
     @Test
     public void testInvalidDiagonalMove() {
-        Position position = new Position(5, 5);
-        assertFalse(whiteRook.isValidMove(position, board));
+        assertFalse(whiteRook.isValidMove(new Position(5, 5), board));
     }
 
     @Test

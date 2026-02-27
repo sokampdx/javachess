@@ -17,13 +17,11 @@ public class KnightTest {
 
     @Test
     public void testIsValidMove() {
-        Position position = new Position(1, 2);
-        assertTrue(blackKnight.isValidMove(position, board));
+        assertTrue(blackKnight.isValidMove(new Position(1, 2), board));
     }
 
     @Test
     public void testIsInvalidMove() {
-        Position position = new Position(1, 3);
-        assertFalse(blackKnight.isValidMove(position, board));
+        assertFalse(blackKnight.isValidMove(new Position(1, 3), board));
     }
 }

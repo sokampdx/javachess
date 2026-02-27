@@ -17,38 +17,50 @@ public class King extends Piece {
         this.canCastle = canCastle;
     }
 
+    public boolean isCanCastle() {
+        return this.canCastle;
+    }
+
     @Override
     public boolean isValidMove(Position newPosition, ChessBoard board) {
         int rowDiff = Math.abs(newPosition.getRow() - position.getRow());
         int colDiff = Math.abs(newPosition.getCol() - position.getCol());
 
-        if (rowDiff <= 1 && colDiff <= 1 && (rowDiff + colDiff > 0)) {
-            return board.isEmpty(newPosition.getRow(), newPosition.getCol()) ||
-                   board.getPiece(newPosition.getRow(), newPosition.getCol()).getColor() != this.color;
+        if (board.isCheckAfterMove(position, newPosition, color)) {
+            return false; // Destination is in check
         }
 
-        // Castling logic can be added here
-        if (colDiff == 2 && rowDiff == 0 && canCastle) {
-             // Check if the path is clear and the rook is in the correct position
+        if (isSingleMove(rowDiff, colDiff)) {
+            return board.isEmpty(newPosition) || board.isOpponentPiece(newPosition, color);
+        }
+
+        if (isCastleMove(rowDiff, colDiff)) {
+            if (board.isInCheck(this.color)) {
+                return false; // It is in check
+            }
+
             int rookCol = (newPosition.getCol() == 6) ? 7 : 0;
             Piece rook = board.getPiece(position.getRow(), rookCol);
+
             if (rook instanceof Rook && rook.getColor() == this.color && ((Rook) rook).isCanCastle()) {
-                // Check if the squares between the king and rook are empty
-                int step = (newPosition.getCol() - position.getCol()) / 2;
-                for (int col = position.getCol() + step; col != rookCol; col += step) {
-                    if (!board.isEmpty(position.getRow(), col)) {
-                        return false; // Path is blocked
-                    } else { 
-                        // Check if the square in between is under attack
-                    }
+                int pathCol = position.getCol() + (newPosition.getCol() - position.getCol()) / 2;
+                if (!board.isEmpty(position.getRow(), pathCol)) {
+                    return false; // Path is blocked
                 }
-                // Check if the squares between the king and rook are not under attack
+                return !(board.isCheckAfterMove(position, new Position(position.getRow(), pathCol), color));
             }
         }
-        this.canCastle = false; // After the first move, castling is no longer possible
         return false;
     }
-    
+
+    private boolean isCastleMove(int rowDiff, int colDiff) {
+        return colDiff == 2 && rowDiff == 0 && canCastle;
+    }
+
+    private static boolean isSingleMove(int rowDiff, int colDiff) {
+        return rowDiff <= 1 && colDiff <= 1 && (rowDiff + colDiff > 0);
+    }
+
     @Override
     public Piece clone() {
         return new King(color, new Position(position), canCastle);

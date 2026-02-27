@@ -80,8 +80,7 @@ public class Pawn extends Piece {
     }
 
     public int getForwardDirection() {
-        int forwardDirection = (color == PieceColor.WHITE) ? 1 : -1;
-        return forwardDirection;
+        return (color == PieceColor.WHITE) ? 1 : -1;
     }
 
     public boolean executeEnPassant(ChessBoard board, Position newPosition) {

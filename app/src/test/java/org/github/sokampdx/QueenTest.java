@@ -17,24 +17,19 @@ public class QueenTest {
 
     @Test
     public void testValidOrthogonalMove() {
-        Position position = new Position(5, 0);
-        assertTrue(whiteQueen.isValidMove(position, board));
-        position = new Position(0, 5);
-        assertTrue(whiteQueen.isValidMove(position, board));
+        assertTrue(whiteQueen.isValidMove(new Position(5, 0), board));
+        assertTrue(whiteQueen.isValidMove(new Position(0, 5), board));
     }
 
     @Test
     public void testValidDiagonalMove() {
-        Position position = new Position(1, 1);
-        assertTrue(whiteQueen.isValidMove(position, board));
-        position = new Position(3, 7);
-        assertTrue(whiteQueen.isValidMove(position, board));
+        assertTrue(whiteQueen.isValidMove(new Position(1, 1), board));
+        assertTrue(whiteQueen.isValidMove(new Position(3, 7), board));
     }
 
     @Test
     public void testInvalidMove() {
-        Position position = new Position(3, 4);
-        assertFalse(whiteQueen.isValidMove(position, board));
+        assertFalse(whiteQueen.isValidMove(new Position(3, 4), board));
     }
 
     @Test

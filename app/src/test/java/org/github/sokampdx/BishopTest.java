@@ -17,14 +17,12 @@ public class BishopTest {
 
     @Test
     public void testValidDiagonalMove() {
-        Position position = new Position(7, 3);
-        assertTrue(blackBishop.isValidMove(position, board));
+        assertTrue(blackBishop.isValidMove(new Position(7, 3), board));
     }
 
     @Test
     public void testInvalidOrthogonalMove() {
-        Position position = new Position(5, 0);
-        assertFalse(blackBishop.isValidMove(position, board));
+        assertFalse(blackBishop.isValidMove(new Position(5, 0), board));
     }
 
     @Test
