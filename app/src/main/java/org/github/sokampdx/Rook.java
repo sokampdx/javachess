@@ -16,9 +16,11 @@ public class Rook extends Piece {
         this.canCastle = canCastle;
     }
 
-    public boolean isCanCastle() {
+    public boolean getCanCastle() {
         return this.canCastle;
     }
+
+    public void setCanCastle(boolean canCastle) { this.canCastle = canCastle; }
 
     @Override
     public boolean isValidMove(Position newPosition, ChessBoard board) {

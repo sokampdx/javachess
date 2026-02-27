@@ -1,6 +1,5 @@
 package org.github.sokampdx;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
@@ -17,9 +16,11 @@ public class King extends Piece {
         this.canCastle = canCastle;
     }
 
-    public boolean isCanCastle() {
+    public boolean getCanCastle() {
         return this.canCastle;
     }
+
+    public void setCanCastle(boolean canCastle) { this.canCastle = canCastle; }
 
     @Override
     public boolean isValidMove(Position newPosition, ChessBoard board) {
@@ -42,7 +43,7 @@ public class King extends Piece {
             int rookCol = (newPosition.getCol() == 6) ? 7 : 0;
             Piece rook = board.getPiece(position.getRow(), rookCol);
 
-            if (rook instanceof Rook && rook.getColor() == this.color && ((Rook) rook).isCanCastle()) {
+            if (rook instanceof Rook && rook.getColor() == this.color && ((Rook) rook).getCanCastle()) {
                 int pathCol = position.getCol() + (newPosition.getCol() - position.getCol()) / 2;
                 if (!board.isEmpty(position.getRow(), pathCol)) {
                     return false; // Path is blocked
@@ -53,8 +54,12 @@ public class King extends Piece {
         return false;
     }
 
-    private boolean isCastleMove(int rowDiff, int colDiff) {
+    public boolean isCastleMove(int rowDiff, int colDiff) {
         return colDiff == 2 && rowDiff == 0 && canCastle;
+    }
+
+    public boolean isCastleMove(Position newPosition) {
+        return isCastleMove(Math.abs(newPosition.getRow() - position.getRow()), Math.abs(newPosition.getCol() - position.getCol()));
     }
 
     private static boolean isSingleMove(int rowDiff, int colDiff) {

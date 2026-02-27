@@ -1,6 +1,6 @@
 package org.github.sokampdx;
 public class ChessGame {
-    private ChessBoard board;
+    private final ChessBoard board;
     private PieceColor currentPlayer;
 
     public ChessGame() {
@@ -16,20 +16,54 @@ public class ChessGame {
         }
 
         if (piece.isValidMove(to, board)) {
-            if ((piece instanceof Pawn) && ((Pawn) piece).executeEnPassant(board, to)) {
-                Position capturedPawnPosition = ((Pawn) piece).enPassantPosition(to, board, ((Pawn) piece).getForwardDirection());
-                board.removePiece(capturedPawnPosition);
-                ((Pawn) piece).setCanEnPassant(false);
+            piece.setPosition(to);
+            if (isExecutingEnPassant(to, piece)) {
+                updateCapturePawn(to, (Pawn) piece);
+            } else if (isCastling(to, piece)) {
+                updateCastleRook(to, (King) piece);
             }
-            board.removePiece(from);
-            board.setPiece(to, piece);
+            updateMovePiece(from, to, piece);
 
-            // Switch player
-            currentPlayer = (currentPlayer == PieceColor.WHITE) ? PieceColor.BLACK : PieceColor.WHITE;
+            switchCurrentPlayer();
             return true;
         }
 
         return false; // Invalid move
+    }
+
+    private void updateMovePiece(Position from, Position to, Piece piece) {
+        board.removePiece(from);
+        piece.setPosition(to);
+        board.setPiece(to, piece);
+    }
+
+    private boolean isExecutingEnPassant(Position to, Piece piece) {
+        return (piece instanceof Pawn) && ((Pawn) piece).executeEnPassant(board, to);
+    }
+
+    private static boolean isCastling(Position to, Piece piece) {
+        return (piece instanceof King) && ((King) piece).isCastleMove(to);
+    }
+
+    private void switchCurrentPlayer() {
+        currentPlayer = (currentPlayer == PieceColor.WHITE) ? PieceColor.BLACK : PieceColor.WHITE;
+    }
+
+    private void updateCapturePawn(Position to, Pawn piece) {
+        Position capturedPawnPosition = piece.enPassantPosition(to, board, piece.getForwardDirection());
+        board.removePiece(capturedPawnPosition);
+        piece.setCanEnPassant(false);
+    }
+
+    private void updateCastleRook(Position to, King king) {
+        Position rookFrom = (to.getCol() > 4) ? new Position(to.getRow(), 7) : new Position(to.getRow(), 0);
+        Position rookTo = (to.getCol() > 4) ? new Position(to.getRow(), 5) : new Position(to.getRow(), 3);
+        Rook rook = (Rook) board.getPiece(rookFrom);
+        rook.setPosition(rookTo);
+        rook.setCanCastle(false);
+        king.setCanCastle(false);
+        board.removePiece(rookFrom);
+        board.setPiece(rook);
     }
 
     public boolean isCheckmate(PieceColor color) {
@@ -45,7 +79,6 @@ public class ChessGame {
                 if (r == 0 && c == 0) continue; // Skip the current position
                 Position newPosition = new Position(kingPosition.getRow() + r, kingPosition.getCol() + c);
 
-                
                 if (board.isPositionOnBoard(newPosition) && king.isValidMove(newPosition, board) && !board.isCheckAfterMove(kingPosition, newPosition, color)) {
                     return false; // Found a valid move that gets the king out of check                    
                 }

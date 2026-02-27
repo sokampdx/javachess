@@ -114,6 +114,8 @@ public class ChessBoard {
         // Simulate the move and check if the king is still in check
         Piece originalToPiece = getPiece(to.getRow(), to.getCol());
         Piece originalFromPiece = getPiece(from.getRow(), from.getCol());
+
+        //note en passant need to remove one extra piece from the board
         Piece newFromPiece = originalFromPiece.clone();
         newFromPiece.setPosition(new Position(to));
         setPiece(to.getRow(), to.getCol(), newFromPiece);
