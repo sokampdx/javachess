@@ -25,10 +25,15 @@ public class ChessGame {
             updateMovePiece(from, to, piece);
 
             switchCurrentPlayer();
+            resetEnPassant();
             return true;
         }
 
         return false; // Invalid move
+    }
+
+    private void resetEnPassant() {
+        board.resetEnPassant(currentPlayer);
     }
 
     private void updateMovePiece(Position from, Position to, Piece piece) {
@@ -52,7 +57,7 @@ public class ChessGame {
     private void updateCapturePawn(Position to, Pawn piece) {
         Position capturedPawnPosition = piece.enPassantPosition(to, board, piece.getForwardDirection());
         board.removePiece(capturedPawnPosition);
-        piece.setCanEnPassant(false);
+        piece.setAllowPassant(false);
     }
 
     private void updateCastleRook(Position to, King king) {

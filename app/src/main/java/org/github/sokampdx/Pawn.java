@@ -1,24 +1,25 @@
 package org.github.sokampdx;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
 public class Pawn extends Piece {
-    private boolean canEnPassant;
+    private boolean allowPassant;
 
     public Pawn(PieceColor color, Position position) {
         super(color, position);
-        this.canEnPassant = false;
+        this.allowPassant = false;
     }
 
-    public Pawn(PieceColor color, Position position, boolean canEnPassant) {
+    public Pawn(PieceColor color, Position position, boolean allowPassant) {
         super(color, position);
-        this.canEnPassant = canEnPassant;
+        this.allowPassant = allowPassant;
     }
 
-    public void setCanEnPassant(boolean canEnPassant) {
-        this.canEnPassant = canEnPassant;
+    public boolean getAllowPassant() { return this.allowPassant; }
+
+    public void setAllowPassant(boolean allowPassant) {
+        this.allowPassant = allowPassant;
     }
 
     @Override
@@ -46,7 +47,7 @@ public class Pawn extends Piece {
 
     @Override
     public Piece clone() {
-        return new Pawn(color, new Position(position), canEnPassant);
+        return new Pawn(color, new Position(position), allowPassant);
     }
 
     private boolean isNormalCapture(Position newPosition, ChessBoard board) {
@@ -60,7 +61,7 @@ public class Pawn extends Piece {
     private boolean isEnPassantCapture(Position newPosition, ChessBoard board, int forwardDirection) {
         Position capturedPawnPosition = enPassantPosition(newPosition, board, forwardDirection);
         return board.isEmpty(newPosition) && board.isOpponentPiece(newPosition, color) &&
-        board.getPiece(capturedPawnPosition) instanceof Pawn && ((Pawn) board.getPiece(capturedPawnPosition)).canEnPassant;
+        board.getPiece(capturedPawnPosition) instanceof Pawn && ((Pawn) board.getPiece(capturedPawnPosition)).allowPassant;
     }
 
     public boolean isDoubleMove(int forwardDirection, int rowDiff) {

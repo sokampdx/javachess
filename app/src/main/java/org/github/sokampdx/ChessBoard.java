@@ -133,4 +133,15 @@ public class ChessBoard {
     public boolean isPositionOnBoard(Position position) {
         return position.getRow() >= 0 && position.getRow() < 8 && position.getCol() >= 0 && position.getCol() < 8;
     }
+
+    public void resetEnPassant(PieceColor color) {
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                Piece piece = getPiece(row, col);
+                if (piece != null && piece.getColor() == color && piece instanceof Pawn && ((Pawn) piece).getAllowPassant()) {
+                    ((Pawn) piece).setAllowPassant(false);
+                }
+            }
+        }
+    }
 }
