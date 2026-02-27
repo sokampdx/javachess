@@ -98,4 +98,16 @@ public class ChessBoardTest {
 
         assertFalse(board.isCheckAfterMove(from, to, PieceColor.WHITE));
     }
+
+    @Test
+    public void testResetEnPassantCorrectly() {
+        Pawn whitePawn = new Pawn(PieceColor.WHITE, new Position(3, 5), true);
+        Pawn blackPawn = new Pawn(PieceColor.BLACK, new Position(4, 5), true);
+        board.setPiece(whitePawn);
+        board.setPiece(blackPawn);
+        board.resetEnPassant(PieceColor.WHITE);
+        assertFalse(whitePawn.getAllowPassant());
+        assertTrue(blackPawn.getAllowPassant());
+    }
+
 }

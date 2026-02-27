@@ -64,7 +64,8 @@ public class ChessBoard {
     }
 
     public boolean isSamePlayerPiece(Position position, PieceColor color) {
-        return getPiece(position) != null && getPiece(position).getColor() == color;
+        Piece piece = getPiece(position);
+        return piece != null && piece.getColor() == color;
     }
 
     public boolean isOpponentPiece(Position position, PieceColor color) {
@@ -137,8 +138,9 @@ public class ChessBoard {
     public void resetEnPassant(PieceColor color) {
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
-                Piece piece = getPiece(row, col);
-                if (piece != null && piece.getColor() == color && piece instanceof Pawn && ((Pawn) piece).getAllowPassant()) {
+                Position position = new Position(row, col);
+                Piece piece = getPiece(position);
+                if (isSamePlayerPiece(position, color) && piece instanceof Pawn && ((Pawn) piece).getAllowPassant()) {
                     ((Pawn) piece).setAllowPassant(false);
                 }
             }
