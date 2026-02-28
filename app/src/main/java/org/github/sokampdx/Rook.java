@@ -24,9 +24,8 @@ public class Rook extends Piece {
 
     @Override
     public boolean isValidMove(Position newPosition, ChessBoard board) {
-        // Implement rook movement logic here
-        int rowDiff = newPosition.getRow() - position.getRow();
-        int colDiff = newPosition.getCol() - position.getCol();
+        int rowDiff = position.getRowDiff(newPosition);
+        int colDiff = position.getColDiff(newPosition);
 
         if (rowDiff != 0 && colDiff != 0) {
             return false; // Rook moves only in straight lines

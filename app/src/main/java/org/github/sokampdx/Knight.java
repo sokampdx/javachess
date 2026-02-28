@@ -12,8 +12,8 @@ public class Knight extends Piece {
 
     @Override
     public boolean isValidMove(Position newPosition, ChessBoard board) {
-        int rowDiff = Math.abs(newPosition.getRow() - position.getRow());
-        int colDiff = Math.abs(newPosition.getCol() - position.getCol());
+        int rowDiff = Math.abs(position.getRowDiff(newPosition));
+        int colDiff = Math.abs(position.getColDiff(newPosition));
 
         if ((rowDiff == 2 && colDiff == 1) || (rowDiff == 1 && colDiff == 2)) {
             return board.isEmpty(newPosition.getRow(), newPosition.getCol()) ||

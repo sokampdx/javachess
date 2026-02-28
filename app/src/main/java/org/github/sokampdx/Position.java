@@ -24,4 +24,12 @@ public class Position {
     public int getRow() {
         return row;
     }
+
+    public int getRowDiff(Position position) {
+        return position.getRow() - this.row;
+    }
+
+    public int getColDiff(Position position) {
+        return position.getCol() - this.col;
+    }
 }

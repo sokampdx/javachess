@@ -11,8 +11,8 @@ public class Queen extends Piece {
 
     @Override
     public boolean isValidMove(Position newPosition, ChessBoard board) {
-        int rowDiff = Math.abs(newPosition.getRow() - position.getRow());
-        int colDiff = Math.abs(newPosition.getCol() - position.getCol());
+        int rowDiff = Math.abs(position.getRowDiff(newPosition));
+        int colDiff = Math.abs(position.getColDiff(newPosition));
 
         if (rowDiff == colDiff || newPosition.getRow() == position.getRow() || newPosition.getCol() == position.getCol()) {
             // Check if the path is clear

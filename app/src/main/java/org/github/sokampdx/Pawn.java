@@ -25,8 +25,8 @@ public class Pawn extends Piece {
     @Override
     public boolean isValidMove(Position newPosition, ChessBoard board) {
         int forwardDirection = getForwardDirection();
-        int rowDiff = newPosition.getRow() - position.getRow();
-        int colDiff = newPosition.getCol() - position.getCol();
+        int rowDiff = position.getRowDiff(newPosition);
+        int colDiff = position.getColDiff(newPosition);
 
         if (isForwardMove(colDiff) && board.isEmpty(newPosition)) {
             if (isSingleMove(forwardDirection, rowDiff)) return true;
