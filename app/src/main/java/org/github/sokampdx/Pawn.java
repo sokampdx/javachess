@@ -27,17 +27,27 @@ public class Pawn extends Piece {
         int forwardDirection = getForwardDirection();
         int rowDiff = position.getRowDiff(newPosition);
         int colDiff = position.getColDiff(newPosition);
-
+        System.out.println("Pawn: isValidMove");
         if (isForwardMove(colDiff) && board.isEmpty(newPosition)) {
-            if (isSingleMove(forwardDirection, rowDiff)) return true;
+            System.out.println("Pawn: isForwardMove");
+
+            if (isSingleMove(forwardDirection, rowDiff)) {
+                System.out.println("Pawn: isSingleMove");
+                return true;
+            }
             if (isDoubleMove(forwardDirection, rowDiff)) {
+                System.out.println("Pawn: isDoubleMove");
                 Position intermediatePosition = new Position(position.getRow() + forwardDirection, position.getCol());
                 return board.isEmpty(intermediatePosition);
             }
         } else if (isCaptureMove(forwardDirection, rowDiff, colDiff)) {
+            System.out.println("Pawn: isCaptureMove");
+
             if (isNormalCapture(newPosition, board)) {
+                System.out.println("Pawn: isNormalCapture");
                 return board.isOpponentPiece(newPosition, color);
             } else {
+                System.out.println("Pawn: isNotNormalCapture");
                 return isEnPassantCapture(newPosition, board, forwardDirection);
             }
         }
