@@ -12,6 +12,8 @@ public class ChessGame {
 
     public PieceColor getCurrentPlayer() { return this.currentPlayer; }
 
+    public ChessBoard getBoard() { return this.board; }
+
     public boolean movePiece(Position from, Position to) {
         Piece piece = board.getPiece(from).clone();
         if (piece == null || piece.getColor() != currentPlayer) {
@@ -19,7 +21,6 @@ public class ChessGame {
         }
 
         if (piece.isValidMove(to, board)) {
-            piece.setPosition(to);
             if (isExecutingEnPassant(to, piece)) {
                 updateCapturePawn(to, (Pawn) piece);
             } else if (isCastling(to, piece)) {
@@ -43,6 +44,10 @@ public class ChessGame {
         board.removePiece(from);
         piece.setPosition(to);
         board.setPiece(to, piece);
+
+        if (piece instanceof King) {
+            ((King) piece).setCanCastle(false);
+        }
     }
 
     private boolean isExecutingEnPassant(Position to, Piece piece) {
