@@ -1,16 +1,20 @@
 package org.github.sokampdx;
 
+import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
 import static org.junit.Assert.*;
 
 public class ChessGameTest {
     private ChessGame game;
 
     @Before
-    public void setUp() {
-        game = new ChessGame();
-    }
+    public void setUp() { game = new ChessGame(); }
 
     @Test
     public void testValidCurrentPlayerSwitch() {
