@@ -13,54 +13,26 @@ public class ChessGame {
     public PieceColor getCurrentPlayer() { return this.currentPlayer; }
 
     public boolean movePiece(Position from, Position to) {
-        System.out.println(currentPlayer);
-
         Piece piece = board.getPiece(from).clone();
         if (piece == null || piece.getColor() != currentPlayer) {
             return false; // No piece at the source or not the player's turn
         }
-        System.out.println("above isValidMove");
 
         if (piece.isValidMove(to, board)) {
-            System.out.println("inside isValidMove");
             piece.setPosition(to);
             if (isExecutingEnPassant(to, piece)) {
-                System.out.println("inside isExecutingEnPassant");
                 updateCapturePawn(to, (Pawn) piece);
             } else if (isCastling(to, piece)) {
                 updateCastleRook(to, (King) piece);
-            } else if (isAllowingEnPassant(to, piece)) {
-                System.out.println("inside check of isAllowingEnPassant");
-                ((Pawn) piece).setAllowPassant(true);
             }
             updateMovePiece(from, to, piece);
-
             switchCurrentPlayer();
             resetEnPassant();
-            System.out.println("----------------");
+
             return true;
         }
 
         return false; // Invalid move
-    }
-
-    private boolean isAllowingEnPassant(Position to, Piece piece) {
-        System.out.println("inside isAllowingEnPassant");
-        System.out.println("from: " + piece.position.getRow());
-        System.out.println("to: " + to.getRow());
-        if (piece instanceof Pawn) { System.out.println("isDoubleMove? " + ((Pawn) piece).isDoubleMove(((Pawn) piece).getForwardDirection(), piece.getPosition().getRowDiff(to))); }
-        if (piece instanceof Pawn && ((Pawn) piece).isDoubleMove(((Pawn) piece).getForwardDirection(), piece.getPosition().getRowDiff(to))) {
-            int toRow = to.getRow();
-            int toCol = to.getCol();
-            int[] adjacentCol = {toCol - 1, toCol + 1};
-            for (int c: adjacentCol) {
-                Piece adjacentPiece = board.getPiece(new Position(toRow, c));
-                if (board.isOpponentPiece(adjacentPiece.position, adjacentPiece.color) && adjacentPiece instanceof Pawn) {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
     private void resetEnPassant() {
